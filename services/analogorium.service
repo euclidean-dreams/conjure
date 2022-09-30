@@ -1,0 +1,12 @@
+[Unit]
+Description=Analogorium
+After=network.target sound.target
+
+[Service]
+Type=simple
+Restart=always
+WorkingDirectory=/home/josiah/euclid
+ExecStart=/home/josiah/euclid/analogorium
+
+[Install]
+WantedBy=multi-user.target

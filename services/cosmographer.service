@@ -1,0 +1,12 @@
+[Unit]
+Description=Cosmographer
+After=analogorium.service
+
+[Service]
+Type=simple
+Restart=always
+WorkingDirectory=/home/josiah/euclid
+ExecStart=/home/josiah/euclid/cosmographer
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=Cosmographer
+After=cosmographer.service
+
+[Service]
+Type=simple
+Restart=always
+WorkingDirectory=/home/josiah/euclid
+ExecStart=/home/josiah/euclid/promenade
+
+[Install]
+WantedBy=multi-user.target
