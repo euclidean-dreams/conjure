@@ -1,5 +1,5 @@
 [Unit]
-Description=Cosmographer
+Description=Promenade
 After=cosmographer.service
 
 [Service]
