@@ -1,13 +1,12 @@
 #!/bin/bash
 
-new_hostname="bismuth"
-
 # foundation
 sudo apt -y update
 sudo apt -y upgrade
 sudo apt -y install build-essential gdb cmake git vim python3-setuptools
 
 # name this thing!
+new_hostname="volitia"
 old_hostname="$HOSTNAME"
 echo "$new_hostname" | sudo tee /etc/hostname
 sudo sed -i "s/$old_hostname/$new_hostname/" /etc/hosts
@@ -114,7 +113,7 @@ sudo make install
 echo "blacklist snd_bcm2835" | sudo tee /etc/modprobe.d/snd-blacklist.conf
 
 # set volitia in /etc/hosts
-echo "10.0.0.85 volitia" | sudo tee -a /etc/hosts
+echo "10.33.33.20 volitia" | sudo tee -a /etc/hosts
 
 # cleanup
 sudo ldconfig
