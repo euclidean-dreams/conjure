@@ -109,6 +109,17 @@ cmake -D BUILD_SHARED=ON -D BUILD_TEST=OFF ..
 cmake --build
 sudo make install
 
+# rpi-rgb-led-matrix for promenade
+mkdir -p ~/badlands
+cd ~/badlands || exit
+git clone https://github.com/hzeller/rpi-rgb-led-matrix.git
+cd ~/badlands/rpi-rgb-led-matrix || exit
+git checkout a3eea997a9254b83ab2de97ae80d83588f696387
+make
+sudo mkdir -p /usr/local/include/rgbmatrix
+sudo cp -r ~/badlands/rpi-rgb-led-matrix/include/* /usr/local/include/rgbmatrix
+sudo cp -r ~/badlands/rpi-rgb-led-matrix/lib/librgbmatrix.a /usr/local/lib
+
 # disable sound card (it interferes with pwm communication with leds)
 echo "blacklist snd_bcm2835" | sudo tee /etc/modprobe.d/snd-blacklist.conf
 
