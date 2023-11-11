@@ -1,12 +1,12 @@
 [Unit]
-Description=Promenade
+Description=Luciferon
 After=cosmographer.service
 
 [Service]
 Type=simple
 Restart=always
 WorkingDirectory=/tmp
-ExecStart=/usr/local/promenade
+ExecStart=/usr/local/luciferon
 
 [Install]
 WantedBy=multi-user.target

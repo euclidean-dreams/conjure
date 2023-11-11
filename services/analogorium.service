@@ -5,8 +5,8 @@ After=network.target sound.target
 [Service]
 Type=simple
 Restart=always
-WorkingDirectory=/home/josiah/euclid
-ExecStart=/home/josiah/euclid/analogorium
+WorkingDirectory=/tmp
+ExecStart=/usr/local/analogorium
 
 [Install]
 WantedBy=multi-user.target
