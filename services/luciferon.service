@@ -5,8 +5,8 @@ After=cosmographer.service
 [Service]
 Type=simple
 Restart=always
-WorkingDirectory=/tmp
-ExecStart=/usr/local/luciferon
+WorkingDirectory=/home/josiah/euclidean-dreams/luciferon
+ExecStart=/home/josiah/euclidean-dreams/luciferon/cmake-build-release-sjofn/luciferon
 
 [Install]
 WantedBy=multi-user.target

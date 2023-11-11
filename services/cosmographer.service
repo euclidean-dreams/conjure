@@ -5,8 +5,8 @@ After=analogorium.service
 [Service]
 Type=simple
 Restart=always
-WorkingDirectory=/tmp
-ExecStart=/usr/local/cosmographer
+WorkingDirectory=/home/josiah/euclidean-dreams/cosmographer
+ExecStart=/home/josiah/euclidean-dreams/cosmographer/cmake-build-sjofn/cosmographer
 
 [Install]
 WantedBy=multi-user.target

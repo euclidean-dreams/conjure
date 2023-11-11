@@ -5,8 +5,8 @@ After=network.target sound.target
 [Service]
 Type=simple
 Restart=always
-WorkingDirectory=/tmp
-ExecStart=/usr/local/analogorium
+WorkingDirectory=/home/josiah/euclidean-dreams/analogorium
+ExecStart=/home/josiah/euclidean-dreams/analogorium/cmake-build-sjofn/analogorium
 
 [Install]
 WantedBy=multi-user.target
