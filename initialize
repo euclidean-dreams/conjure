@@ -4,24 +4,25 @@
 sudo apt -y update
 sudo apt -y upgrade
 sudo apt -y install build-essential gdb cmake git vim python3-setuptools
+# add GitHub ssh creds!!
 
 # name this thing!
-new_hostname="volitia"
-old_hostname="$HOSTNAME"
-echo "$new_hostname" | sudo tee /etc/hostname
-sudo sed -i "s/$old_hostname/$new_hostname/" /etc/hosts
+#new_hostname="volitia"
+#old_hostname="$HOSTNAME"
+#echo "$new_hostname" | sudo tee /etc/hostname
+#sudo sed -i "s/$old_hostname/$new_hostname/" /etc/hosts
 
 # no more passwords!
 echo "$USER ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/nopassword
 
 # ssh stuff
-mkdir -p ~/.ssh
-public_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCjiwWDzdb4u8iGC0vbkBd64cHZwBZY8ePjxQBtfkLDmCHZkKhqwZwwBcCG3GNBDuIvm9Y\
-gi6yAu+X2XORKZKuMAmBL/oMsqg5E0Z6qoJb5ZQYU++icEARpQe/WgHqYqS36nwopHtvTzHK3+fgWAdOebfVNiHUccvAg8Q79IMJumdLGjCumP669/fFAOB\
-ZtQrAT23HYg7jrUzwclpVL21QwC7UnzuT29g01MKMKb8UdVmBT+BkITQSyw6FO138KMXfUKn0SCNLOdTTIV+fzyuN6Igiyt4vEH7tksr6n0Mq9WVzGiPJUY\
-tqgOwKsVK6mRXqRY5IHjw1EXQCimgib39fnlQiFcg8HYjiLfsHrpgDFZ3kse3t3IHf+gNucXBtDFoiIDdC/N0yw9qyQ83QtmgUBX5ZbjtDLVDVErQ89jGQa\
-QkCcJm8m970+tKUrWQCyOWbclDEQmmrz6KgNa/xEiccCa0aVrcfcJ6ZOAM/3iF8f9nEzIRi2umG6sG87B1iPjB8= gubbins"
-echo "$public_key" | tee ~/.ssh/authorized_keys
+#mkdir -p ~/.ssh
+#public_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCjiwWDzdb4u8iGC0vbkBd64cHZwBZY8ePjxQBtfkLDmCHZkKhqwZwwBcCG3GNBDuIvm9Y\
+#gi6yAu+X2XORKZKuMAmBL/oMsqg5E0Z6qoJb5ZQYU++icEARpQe/WgHqYqS36nwopHtvTzHK3+fgWAdOebfVNiHUccvAg8Q79IMJumdLGjCumP669/fFAOB\
+#ZtQrAT23HYg7jrUzwclpVL21QwC7UnzuT29g01MKMKb8UdVmBT+BkITQSyw6FO138KMXfUKn0SCNLOdTTIV+fzyuN6Igiyt4vEH7tksr6n0Mq9WVzGiPJUY\
+#tqgOwKsVK6mRXqRY5IHjw1EXQCimgib39fnlQiFcg8HYjiLfsHrpgDFZ3kse3t3IHf+gNucXBtDFoiIDdC/N0yw9qyQ83QtmgUBX5ZbjtDLVDVErQ89jGQa\
+#QkCcJm8m970+tKUrWQCyOWbclDEQmmrz6KgNa/xEiccCa0aVrcfcJ6ZOAM/3iF8f9nEzIRi2umG6sG87B1iPjB8= gubbins"
+#echo "$public_key" | tee ~/.ssh/authorized_keys
 echo "PasswordAuthentication no" | sudo tee /etc/ssh/sshd_config.d/no_password.conf
 echo "PermitRootLogin no" | sudo tee /etc/ssh/sshd_config.d/no_root_login.conf
 
@@ -98,36 +99,34 @@ make
 sudo make install
 
 # ws2811 for promenade
-mkdir -p ~/badlands
-cd ~/badlands || exit
-git clone https://github.com/jgarff/rpi_ws281x.git
-cd ~/badlands/rpi_ws281x || exit
-git checkout 9be313f77aa494036e2dc205b6ec2860e7ee988c
-mkdir build
-cd ~/badlands/rpi_ws281x/build || exit
-cmake -D BUILD_SHARED=ON -D BUILD_TEST=OFF ..
-cmake --build
-sudo make install
+#mkdir -p ~/badlands
+#cd ~/badlands || exit
+#git clone https://github.com/jgarff/rpi_ws281x.git
+#cd ~/badlands/rpi_ws281x || exit
+#git checkout 9be313f77aa494036e2dc205b6ec2860e7ee988c
+#mkdir build
+#cd ~/badlands/rpi_ws281x/build || exit
+#cmake -D BUILD_SHARED=ON -D BUILD_TEST=OFF ..
+#cmake --build
+#sudo make install
 
 # rpi-rgb-led-matrix for promenade
-mkdir -p ~/badlands
-cd ~/badlands || exit
-git clone https://github.com/hzeller/rpi-rgb-led-matrix.git
-cd ~/badlands/rpi-rgb-led-matrix || exit
-git checkout a3eea997a9254b83ab2de97ae80d83588f696387
-make
-sudo mkdir -p /usr/local/include/rgbmatrix
-sudo cp -r ~/badlands/rpi-rgb-led-matrix/include/* /usr/local/include/rgbmatrix
-sudo cp -r ~/badlands/rpi-rgb-led-matrix/lib/librgbmatrix.a /usr/local/lib
+#mkdir -p ~/badlands
+#cd ~/badlands || exit
+#git clone https://github.com/hzeller/rpi-rgb-led-matrix.git
+#cd ~/badlands/rpi-rgb-led-matrix || exit
+#git checkout a3eea997a9254b83ab2de97ae80d83588f696387
+#make
+#sudo mkdir -p /usr/local/include/rgbmatrix
+#sudo cp -r ~/badlands/rpi-rgb-led-matrix/include/* /usr/local/include/rgbmatrix
+#sudo cp -r ~/badlands/rpi-rgb-led-matrix/lib/librgbmatrix.a /usr/local/lib
 
 # disable sound card (it interferes with communication with leds)
 echo "blacklist snd_bcm2835" | sudo tee /etc/modprobe.d/snd-blacklist.conf
 
 # set volitia in /etc/hosts
-echo "10.33.33.20 volitia" | sudo tee -a /etc/hosts
+echo "10.3.33.188 volitia" | sudo tee -a /etc/hosts
 
 # cleanup
 sudo ldconfig
 sudo reboot
-
-# copy over wpa supplicant

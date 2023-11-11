@@ -1,3 +1,3 @@
-# get eden
+# get conjure
 cd ~ || exit
-git clone https://github.com/euclidean-dreams/eden.git
+git clone https://github.com/euclidean-dreams/conjure.git
