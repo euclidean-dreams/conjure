@@ -80,10 +80,6 @@ deactivate
 # disable internal sound card (it interferes with led communication with, and gets in the way of the usb sound card)
 echo "blacklist snd_bcm2835" | sudo tee /etc/modprobe.d/snd-blacklist.conf
 
-# cleanup
-sudo ldconfig
-sudo reboot
-
 # enable euclid
 sudo cp ~/badlands/conjure/euclid.service /etc/systemd/system/euclid.service
 #################################
@@ -100,3 +96,7 @@ sudo swapon /swapfile
 
 # no want swap?
 sudo swapoff -v /swapfile
+
+# cleanup
+sudo ldconfig
+sudo reboot
