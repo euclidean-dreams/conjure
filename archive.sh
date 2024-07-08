@@ -29,18 +29,6 @@ cd ~/badlands/cppzmq/build || exit
 cmake -DCPPZMQ_BUILD_TESTS=OFF ..
 sudo make -j4 install
 
-# portaudio
-# no devices will be listed if you install portaudio before alsa - if this happens, run make clean, then install again
-sudo apt -y install libasound-dev
-mkdir -p ~/badlands
-cd ~/badlands || exit
-curl -L -o portaudio.tgz http://files.portaudio.com/archives/pa_snapshot.tgz
-tar -xzf portaudio.tgz -C ~/badlands
-rm portaudio.tgz
-cd ~/badlands/portaudio || exit
-./configure
-sudo make install
-
 # spidev-lib for promenade
 mkdir -p ~/badlands
 cd ~/badlands || exit
@@ -88,3 +76,15 @@ make
 sudo mkdir -p /usr/local/include/rgbmatrix
 sudo cp -r ~/badlands/rpi-rgb-led-matrix/include/* /usr/local/include/rgbmatrix
 sudo cp -r ~/badlands/rpi-rgb-led-matrix/lib/librgbmatrix.a /usr/local/lib
+
+## kiss-fft
+mkdir -p ~/badlands
+cd ~/badlands || exit
+git clone https://github.com/mborgerding/kissfft.git
+cd ~/badlands/kissfft || exit
+git checkout f5f2a3b2f2cd02bf80639adb12cbeed125bdf420
+mkdir build
+cd build || exit
+cmake -DCMAKE_INSTALL_INCLUDEDIR=/usr/local/include -DKISSFFT_DATATYPE=float -DKISSFFT_STATIC=ON -DKISSFFT_OPENMP=OFF -DKISSFFT_TEST=OFF -DKISSFFT_TOOLS=OFF ..
+make all
+#sudo cp libkissfft-float.a /usr/local/lib/libkissfft.a
