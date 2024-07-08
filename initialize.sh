@@ -21,6 +21,15 @@ echo "$USER ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/nopassword
 echo "PasswordAuthentication no" | sudo tee /etc/ssh/sshd_config.d/no_password.conf
 echo "PermitRootLogin no" | sudo tee /etc/ssh/sshd_config.d/no_root_login.conf
 
+# want swap?
+sudo fallocate -l 4G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+# no want swap?
+sudo swapoff -v /swapfile
+
 # apt packages
 sudo apt -y install libspdlog-dev
 
@@ -87,15 +96,6 @@ sudo cp ~/badlands/conjure/euclid.service /etc/systemd/system/euclid.service
 #################################
 sudo ln -s ~/euclidean-dreams/euclid/build-sjofn/euclid /usr/local/bin/euclid
 sudo systemctl enable euclid.service
-
-# want swap?
-sudo fallocate -l 4G /swapfile
-sudo chmod 600 /swapfile
-sudo mkswap /swapfile
-sudo swapon /swapfile
-
-# no want swap?
-sudo swapoff -v /swapfile
 
 # cleanup
 sudo ldconfig
