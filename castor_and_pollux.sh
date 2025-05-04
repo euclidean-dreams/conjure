@@ -7,6 +7,7 @@ sudo apt -y install build-essential gdb cmake git vim python3-setuptools
 
 # ssh
 ssh-keygen
+
 ##########################
 # add GitHub ssh creds!! #
 ##########################
@@ -74,30 +75,28 @@ cd ~/badlands/portaudio || exit
 ./configure
 sudo make install
 
-# kfr
-sudo apt -y install clang
-sudo apt -y install ninja-build
-sudo apt -y install python3.11-venv
+## kiss-fft
 mkdir -p ~/badlands
 cd ~/badlands || exit
-git clone https://github.com/kfrlib/kfr.git
-cd ~/badlands/kfr || exit
-python3 -m venv ./venv
-source venv/bin/activate
-pip install -r requirements.txt
-cmake -B build-release -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_CXX_COMPILER=clang
-sudo ninja -C build-release install
-deactivate
+git clone https://github.com/mborgerding/kissfft.git
+cd ~/badlands/kissfft || exit
+git checkout f5f2a3b2f2cd02bf80639adb12cbeed125bdf420
+mkdir build
+cd build || exit
+cmake -DCMAKE_INSTALL_INCLUDEDIR=/usr/local/include -DKISSFFT_DATATYPE=float -DKISSFFT_STATIC=OFF -DKISSFFT_OPENMP=OFF -DKISSFFT_TEST=OFF -DKISSFFT_TOOLS=OFF ..
+make all
+sudo make install
 
 # disable internal sound card (it interferes with led communication with, and gets in the way of the usb sound card)
 echo "blacklist snd_bcm2835" | sudo tee /etc/modprobe.d/snd-blacklist.conf
 
 # enable euclid
 sudo cp ~/badlands/conjure/euclid.service /etc/systemd/system/euclid.service
+
 #################################
 # modify this target path!!!!!! #
 #################################
-sudo ln -s ~/euclidean-dreams/euclid/build-sjofn/euclid /usr/local/bin/euclid
+sudo ln -s ~/euclidean-dreams/euclid/build-"${HOSTNAME}"/euclid /usr/local/bin/euclid
 sudo systemctl enable euclid.service
 
 # cleanup
