@@ -5,15 +5,6 @@ sudo apt -y update
 sudo apt -y upgrade
 sudo apt -y install build-essential gdb cmake git vim python3-setuptools
 
-# ssh
-ssh-keygen
-##########################
-# add GitHub ssh creds!! #
-##########################
-mkdir -p ~/badlands
-cd ~/badlands || exit
-git clone git@github.com:euclidean-dreams/conjure.git
-
 # no more passwords!
 echo "$USER ALL=(ALL:ALL) NOPASSWD: ALL" | sudo tee /etc/sudoers.d/nopassword
 
@@ -26,9 +17,6 @@ sudo fallocate -l 4G /swapfile
 sudo chmod 600 /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
-
-# no want swap?
-sudo swapoff -v /swapfile
 
 # apt packages
 sudo apt -y install libspdlog-dev
@@ -93,12 +81,29 @@ deactivate
 echo "blacklist snd_bcm2835" | sudo tee /etc/modprobe.d/snd-blacklist.conf
 
 # enable euclid
-sudo cp ~/badlands/conjure/euclid.service /etc/systemd/system/euclid.service
-#################################
-# modify this target path!!!!!! #
-#################################
-sudo ln -s ~/euclidean-dreams/euclid/build-sjofn/euclid /usr/local/bin/euclid
+sudo tee /etc/systemd/system/euclid.service > /dev/null <<'EOF'
+[Unit]
+Description=Euclid
+After=network.target sound.target
+
+[Service]
+Type=simple
+Restart=always
+WorkingDirectory=/tmp
+ExecStart=/usr/local/bin/euclid
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo ln -s ~/euclid /usr/local/bin/euclid
 sudo systemctl enable euclid.service
+
+# picotool
+wget https://raw.githubusercontent.com/raspberrypi/pico-setup/master/pico_setup.sh
+chmod +x pico_setup.sh
+./pico_setup.sh
+rm pico_setup.sh
 
 # cleanup
 sudo ldconfig
